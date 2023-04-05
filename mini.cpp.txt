@@ -1,0 +1,848 @@
+#include <iostream>
+#include <time.h>
+#include <chrono>
+#include <ctime>
+#include < Windows.h>
+#include <stdlib.h>
+#include <stdlib.h>
+using namespace std;
+void main_menu();
+struct Player {
+	string name;
+	int age;
+	int card[3];
+	int kind_of_card[3];
+	int namayeshgah[6];
+	int kind_of_namayeshgah[6];
+	int count_tedad_namayeshgah;
+	int score;
+	int score_check;
+};
+struct Temp {
+	int temp[90];
+	int index;
+};
+struct First_card {
+	int card[90];
+	int kind_of_card[90];
+};
+void starting_game(Player[], int);
+int random(Player[], Temp&, int, First_card);
+int second_random(Player[], Temp&, First_card, int, int);
+int other_players_namayeshgah(Player[], int, int, int);
+int remove_same_namayeshgah(Player[], int);
+int shift_for_namayeshgah(Player[], int);
+int show_players_cart(Player[], int, int);
+bool tedad_sotoon_of_namayeshgah(Player[], int);
+bool score(Player[], int);
+bool score_check(Player[], int);
+bool check_sotoonhay_namayeshgah(Player[], int, int);
+int namayesh_players(Player[], int);
+int main()
+{
+	int a = 0;
+	std::chrono::steady_clock::time_point tend = std::chrono::steady_clock::now()
+		+ std::chrono::seconds(3);
+	while (std::chrono::steady_clock::now() < tend) {
+		if (a == 0) {
+			system("Color 0A");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+			cout << "************************************************************************************************************************************************************************" << endl << endl;
+			cout << "                                                               WELCOME TO KASTEL (by Mohammad Jafari) " << endl << endl << endl;
+
+			cout << "************************************************************************************************************************************************************************";
+		}
+		a++;
+	}
+	system("cls");
+	a = 0;
+	std::chrono::steady_clock::time_point t = std::chrono::steady_clock::now()
+		+ std::chrono::seconds(3);
+	while (std::chrono::steady_clock::now() < t) {
+		if (a == 0) {
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+			cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+			cout << "                                  ARE YOU READY FOR THE GAME ? " << endl << endl << endl;
+
+			cout << "************************************************************************************************************************************************************************";
+		}
+		a++;
+
+	}
+	system("cls");
+	std::chrono::steady_clock::time_point e = std::chrono::steady_clock::now()
+		+ std::chrono::seconds(3);
+	a = 0;
+	while (std::chrono::steady_clock::now() < e) {
+		if (a == 0) {
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+
+			cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+			cout << "                                                                                                      LLLLLLLLLLLET'S GOOOOOOOOOOOOOOO :) " << endl << endl << endl;
+
+			cout << "************************************************************************************************************************************************************************";
+		}
+		a++;
+
+	}
+
+	system("cls");
+	cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+	cout << "                                                   Do You Need To Read Game Guide ? ( <Y> : YES , <N> : NO ) ";
+	cout << endl << endl << endl;
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+	char guide;
+	cin >> guide;
+	if (guide == 'y' || guide == 'Y') {
+		ShellExecute(0, 0, L"https://lbmind.com/images/PDF/Kastel.pdf", 0, 0, SW_SHOW);
+		cout << "\t FOR CONTINUE PRESS ENTER : ";
+		cin.ignore();
+		cin.ignore();
+	}
+	system("cls");
+
+	a = 0;
+	std::chrono::steady_clock::time_point n = std::chrono::steady_clock::now()
+		+ std::chrono::seconds(5);
+	while (std::chrono::steady_clock::now() < n) {
+
+		if (a == 0) {
+			system("Color 0B");
+
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+			cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+			cout << "                                                   FIRST WE Should Know Some Information , So Please Fill in Follow Questions ";
+			cout << endl << endl << endl;
+			cout << "************************************************************************************************************************************************************************";
+
+		}
+		a++;
+	}
+	main_menu();
+
+}
+
+void main_menu()
+{
+	system("cls");
+	system("Color 0F");
+
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+	cout << "                                                        " << "____________________INFORMATION___________________" << endl << endl;
+
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+
+	int number_of_players, i, j;
+	Player temp;
+	cout << "\t How many Players are there ? ";
+	cin >> number_of_players;
+	cout << endl;
+
+	Player* players = new Player[number_of_players];
+
+
+	system("cls");
+
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+	cout << "                                                        " << "____________________INFORMATION___________________" << endl << endl;
+
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+	for (i = 0; i < number_of_players; i++) {
+
+		cout << "\t Name of " << i + 1 << " th Player : ";
+		cin >> players[i].name;
+
+		cout << endl << "\t Age of " << i + 1 << " th Player : ";
+
+		cin >> players[i].age;
+
+		cout << endl;
+	}
+
+	for (i = 0; i < number_of_players - 1; i++)
+	{
+
+		for (j = 0; j < number_of_players - 1 - i; j++)
+		{
+			if (players[j].age > players[j + 1].age) {
+				temp = players[j];
+				players[j] = players[j + 1];
+				players[j + 1] = temp;
+			}
+		}
+	}
+
+	starting_game(players, number_of_players);
+
+}
+
+void starting_game(Player players[], int number_of_players)
+{
+
+
+	First_card cards;
+	Temp temp_cards;
+	int i, j = 1;
+
+
+	for (i = 0; i < 90; i++)
+	{
+		if (j == 16)j = 1;
+		cards.card[i] = j;
+		if (i < 30)
+			cards.kind_of_card[i] = 1;
+		if (i >= 30 && i < 60)cards.kind_of_card[i] = 2;
+		if (i >= 60)cards.kind_of_card[i] = 3;
+		j++;
+
+	}
+	// changing scores to 0
+	for (i = 0; i < number_of_players; i++)
+	{
+		players[i].score = 0;
+		players[i].score_check = 0;
+	}
+
+	int tedad_rand_bazi = 0;
+	bool emtiaz_150 = true;
+	bool first_three_card;
+	cin.ignore();
+
+	while (emtiaz_150)
+	{
+		int i, j;
+		for (i = 0; i < 90; i++) temp_cards.temp[i] = -1;
+		tedad_rand_bazi++;
+		system("cls");
+		system("Color 0F");
+
+
+		cout << "************************************************************************************************************************************************************************" << endl << endl;
+		cout << "                                                        " << "____________________GAME___________________" << endl << endl;
+
+		cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+		cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+		cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+		cout << "                                                                                    RAND  " << tedad_rand_bazi << endl;
+		cout << "                                                                       FOR STARTING THE GAME PRESS ENTER                              " << endl << endl;
+		cout << "************************************************************************************************************************************************************************";
+
+		cin.ignore();
+		for (i = 0; i < number_of_players; i++)
+		{
+			players[i].count_tedad_namayeshgah = 0;
+
+			for (j = 0; j < 6; j++)
+			{
+				players[i].namayeshgah[j] = 0;
+				players[i].kind_of_namayeshgah[j] = 0;
+			}
+		}
+		random(players, temp_cards, number_of_players, cards);
+		int a = 0;
+		system("cls");
+		std::chrono::steady_clock::time_point tend = std::chrono::steady_clock::now()
+			+ std::chrono::seconds(2);
+		while (std::chrono::steady_clock::now() < tend) {
+			if (a == 0) {
+
+				system("color 0A");
+
+				cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+				cout << "************************************************************************************************************************************************************************" << endl << endl;
+				cout << "                                                                            STARTING ... " << endl << endl << endl;
+
+				cout << "************************************************************************************************************************************************************************";
+			}
+			a++;
+		}
+		bool payan_rand = true;
+		// one rand
+		while (payan_rand) {
+
+			for (i = 0; i < number_of_players; i++)
+			{
+
+				int choice;
+				choice = show_players_cart(players, i, number_of_players);
+
+				cout << endl << endl << "\t <1> : Your Show" << endl << endl;
+				cout << "\t <2> : Other Players Show ";
+				int choice_namayeshgah;
+				cout << endl << endl;
+				cout << "\t Your Choice for Show : ";
+				cin >> choice_namayeshgah;
+
+				if (choice_namayeshgah == 1) {
+					cout << endl << endl;
+					cout << "***************************************************" << endl;
+
+					cout << "\t Chosen card : " << endl;
+					cout << "\t HELP : chosen card (kind of card) " << endl;
+					cout << "\t " << players[i].card[choice] << " (" << players[i].kind_of_card[choice] << ")" << endl;
+					cout << "***************************************************" << endl;
+
+					if (players[i].count_tedad_namayeshgah == 0)cout << endl << "\t *TIP* : You dont have any Show's column yet! You Can Create It" << endl << endl;
+					else
+						cout << endl << endl << "\t Which Show's column do you choose ?" << endl << endl;
+					int abc = 0;
+					for (j = 0; j < players[i].count_tedad_namayeshgah; j++)
+					{
+						if (abc == 0)
+							cout << "\t HELP : <i th Show's column> Show's card (kind of Show's card)" << endl << endl;
+						abc++;
+						cout << "\t <" << j << "> " << players[i].namayeshgah[j] << " (" << players[i].kind_of_namayeshgah[j] << ") " << endl;
+					}
+					int namayeshgah_khode_player;
+					bool ham_jens_bodane_cards = true;
+					while (ham_jens_bodane_cards) {
+						cout << endl << "\t Your Choice For Show's column (Choose 0-5) : ";
+						cin >> namayeshgah_khode_player;
+
+						if (players[i].kind_of_namayeshgah[namayeshgah_khode_player] == players[i].kind_of_card[choice])ham_jens_bodane_cards = false;
+						else if (players[i].kind_of_namayeshgah[namayeshgah_khode_player] == 0)ham_jens_bodane_cards = false;
+						else {
+							cout << endl << endl << "\t You Can't Choose This Show's column ,Please Choose Other Players Or Show's column " << endl << endl;
+
+
+						}
+
+						cin.ignore();
+					}
+					cout << endl;
+
+					if (players[i].namayeshgah[namayeshgah_khode_player] == 0)players[i].count_tedad_namayeshgah++;
+					players[i].namayeshgah[namayeshgah_khode_player] = players[i].card[choice];
+					players[i].kind_of_namayeshgah[namayeshgah_khode_player] = players[i].kind_of_card[choice];
+					second_random(players, temp_cards, cards, i, choice);
+					remove_same_namayeshgah(players, number_of_players);
+
+				}
+				if (choice_namayeshgah == 2) {
+					other_players_namayeshgah(players, number_of_players, i, choice);
+					second_random(players, temp_cards, cards, i, choice);
+
+
+				}
+
+
+				payan_rand = tedad_sotoon_of_namayeshgah(players, number_of_players);
+				if (temp_cards.temp[89] != -1)payan_rand = false;
+				payan_rand = score_check(players, number_of_players);
+				if (payan_rand) {
+					payan_rand = tedad_sotoon_of_namayeshgah(players, number_of_players);
+					if (temp_cards.temp[89] != -1)payan_rand = false;
+				}
+				if (payan_rand == false)break;
+
+			}
+
+		}
+
+		emtiaz_150 = score(players, number_of_players);
+		if (payan_rand == false && emtiaz_150 == true)
+		{
+			Player temp;
+			int m;
+			system("cls");
+			system("Color 0A");
+			for (m = 0; m < number_of_players - 1; m++)
+			{
+
+				for (j = 0; j < number_of_players - 1 - i; j++)
+				{
+					if (players[j].score < players[j + 1].score) {
+						temp = players[j];
+						players[j] = players[j + 1];
+						players[j + 1] = temp;
+					}
+				}
+			}
+			cout << "************************************************************************************************************************************************************************" << endl << endl;
+			cout << "                                                                             SHOW SCORES " << endl << endl << endl;
+
+			cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+
+			cout << "\t HELP : Player's Name   Player's Score : " << endl << endl;
+			for (m = 0; m < number_of_players; m++)
+			{
+
+
+				cout << "\t " << players[m].name << "   " << players[m].score << endl << endl;
+
+			}
+			cout << "\t FOR CONTINUE PRESS ENTER : ";
+			cin.ignore();
+
+		}
+
+	}
+
+	namayesh_players(players, number_of_players);
+
+	int a = 0;
+	std::chrono::steady_clock::time_point tend = std::chrono::steady_clock::now()
+		+ std::chrono::seconds(10);
+	while (std::chrono::steady_clock::now() < tend) {
+		if (a == 0) {
+			system("cls");
+			system("Color 0A");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+			cout << "************************************************************************************************************************************************************************" << endl << endl;
+			cout << "                                                                     WE HOPE YOU ENJOY THE GAME " << endl << endl << endl;
+
+			cout << "************************************************************************************************************************************************************************";
+		}
+		a++;
+	}
+	exit(0);
+
+}
+//random function
+int random(Player players[], Temp& temp_cards, int number_of_players, First_card cards)
+{
+	int i, j, index, z, temp1 = 0;
+	temp_cards.index = 0;
+	bool random;
+
+	srand(time(0));
+
+	for (i = 0; i < number_of_players; i++)
+	{
+		for (z = 0; z < 3; z++)
+		{
+			do {
+				index = rand() % 90;
+				random = false;
+				for (j = 0; j < temp_cards.index; j++)
+				{
+					if (index == temp_cards.temp[j]) {
+						random = true;
+					}
+
+				}
+
+			} while (random);
+			temp_cards.temp[temp1] = index;
+			players[i].card[z] = cards.card[index];
+			players[i].kind_of_card[z] = cards.kind_of_card[index];
+			temp1++;
+			temp_cards.index++;
+
+		}
+
+	}
+	return 0;
+
+}
+int second_random(Player players[], Temp& temp_cards, First_card cards, int players_number, int card_number)
+{
+	int i, j, index, z;
+	bool random;
+	int now;
+	srand(time(0));
+
+
+	do {
+		index = rand() % 90;
+		random = false;
+		for (j = 0; j < temp_cards.index; j++)
+		{
+			if (index == temp_cards.temp[j]) {
+				random = true;
+			}
+
+		}
+
+	} while (random);
+	temp_cards.temp[temp_cards.index] = index;
+	players[players_number].card[card_number] = cards.card[index];
+	players[players_number].kind_of_card[card_number] = cards.kind_of_card[index];
+	temp_cards.index++;
+
+
+
+
+	return 0;
+}
+
+int other_players_namayeshgah(Player players[], int number_of_players, int khode_player, int shomare_cart)
+{
+	system("cls");
+
+	system("color 0B");
+
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+	cout << "                                                        " << "____________________GAME___________________" << endl << endl;
+
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+	int i, j, choose_player, choosing_cart;
+	cout << endl;
+	cout << "***************************************************" << endl;
+
+	cout << "\t Chosen card by " << players[khode_player].name << " :" << endl;
+	cout << "\t HELP : chosen card (kind of card) " << endl;
+	cout << "\t " << players[khode_player].card[shomare_cart] << " (" << players[khode_player].kind_of_card[shomare_cart] << ")" << endl;
+	cout << "***************************************************" << endl << endl << endl;
+	
+
+	for (i = 0; i < number_of_players; i++)
+	{
+		if (players[i].age != players[khode_player].age && players[i].name != players[khode_player].name) {
+
+			cout << "\t " << players[i].name << "'s " << "Show : ( For choosing this player Press " << i << " )" << endl << endl;
+			int abc = 0;
+			for (j = 0; j < players[i].count_tedad_namayeshgah; j++)
+			{
+				if (abc == 0)
+					cout << "\t <Your Choice> card (kind of card) : " << endl << endl;
+				abc++;
+				cout << "\t <" << j << "> " << players[i].namayeshgah[j] << " (" << players[i].kind_of_namayeshgah[j] << ")" << endl << endl;
+			}
+
+			if (players[i].count_tedad_namayeshgah == 0)cout << endl << "\t *TIP* : This Player doesn't have any Show's column yet!" << endl << endl;
+
+		}
+	}
+
+	bool ham_jens_boodane_cards = true;
+
+	while (ham_jens_boodane_cards) {
+		cout << "\t Your Choice For Players : ";
+		cin >> choose_player;
+		cout << endl << endl;
+		cout << "\t Your Choice For Show's column of Player (Choose 0-5) : ";
+		cin >> choosing_cart;
+		if (players[choose_player].kind_of_namayeshgah[choosing_cart] == players[khode_player].kind_of_card[shomare_cart])ham_jens_boodane_cards = false;
+		else if (players[choose_player].kind_of_namayeshgah[choosing_cart] == 0)ham_jens_boodane_cards = false;
+		else {
+			cout << endl << endl << "\t You Can't Choose This show's column ,Please Choose Other Players Or Show's column " << endl << endl;
+
+
+		}
+		cin.ignore();
+	}
+	cout << endl;
+	if (players[choose_player].namayeshgah[choosing_cart] == 0)	players[choose_player].count_tedad_namayeshgah++;
+	players[choose_player].namayeshgah[choosing_cart] = players[khode_player].card[shomare_cart];
+	players[choose_player].kind_of_namayeshgah[choosing_cart] = players[khode_player].kind_of_card[shomare_cart];
+	remove_same_namayeshgah(players, number_of_players);
+
+
+	return 0;
+}
+
+int remove_same_namayeshgah(Player players[], int number_of_players)
+{
+	int i, j, z;
+	for (i = 0; i < number_of_players; i++)
+	{
+		for (j = 0; j < players[i].count_tedad_namayeshgah; j++)
+		{
+			for (z = j + 1; z < 6; z++)
+			{
+				if (players[i].namayeshgah[j] != 0 && players[i].namayeshgah[j] == players[i].namayeshgah[z] && players[i].kind_of_namayeshgah[j] == players[i].kind_of_namayeshgah[z])
+				{
+					players[i].namayeshgah[z] = 0;
+					players[i].kind_of_namayeshgah[z] = 0;
+					players[i].count_tedad_namayeshgah--;
+				}
+			}
+		}
+	}
+	shift_for_namayeshgah(players, number_of_players);
+	return 0;
+}
+
+int shift_for_namayeshgah(Player players[], int number_of_players)
+{
+	int i, j, count = 0, z, m;
+	for (i = 0; i < number_of_players; i++)
+	{
+		for (j = 0; j < 6; j++)
+		{
+			if (players[i].namayeshgah[j] == 0)count++;
+
+		}
+		if (count != 6) {
+			for (z = 0; z < 6; z++)
+			{
+				if (players[i].namayeshgah[z] == 0) {
+					for (m = z + 1; m < 6; m++)
+					{
+						players[i].namayeshgah[m - 1] = players[i].namayeshgah[m];
+						players[i].kind_of_namayeshgah[m - 1] = players[i].kind_of_namayeshgah[m];
+
+
+
+					}
+					players[i].namayeshgah[5] = 0;
+					players[i].kind_of_namayeshgah[5] = 0;
+				}
+				if (players[i].namayeshgah[z] == 0 && (5 - z) == count)z = z - 1;
+			}
+		}
+		count = 0;
+	}
+	return 0;
+
+}
+
+int show_players_cart(Player players[], int n_player, int number_of_players)
+{
+	int i, j;
+	system("cls");
+	system("color 0B");
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+	cout << "                                                        " << "____________________GAME___________________" << endl << endl;
+
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+	cout << "\a";
+	cout << "\t " << players[n_player].name << " 's" << " turn" << endl << endl;
+
+	cout << "\t TIP : Other Players Can't look" << endl << endl;
+	cout << "\t FOR CONTINUE PRESS ENTER : ";
+	cin.ignore();
+	system("cls");
+	system("color 0B");
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+	cout << "                                                        " << "____________________GAME___________________" << endl << endl;
+
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+	cout << "\t " << players[n_player].name << " 's" << " turn" << endl << endl;
+	cout << "\t TIP : Other Players Can't look" << endl << endl;
+	cout << "\t Help : <Your choice> Player's card (Kind of card)" << endl << endl;
+
+	for (i = 0; i < 3; i++)
+	{
+		cout << "\t " << "<" << i << "> " << players[n_player].card[i] << " (" << players[n_player].kind_of_card[i] << ") " << endl;
+	}
+	cout << endl;
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+	bool abc = true;
+	for (i = 0; i < number_of_players; i++)
+	{
+		if (i == n_player)cout << "\t Your Show : " << endl << endl;
+		else cout << "\t " << players[i].name << "'s " << "Show :" << endl << endl;
+		for (j = 0; j < players[i].count_tedad_namayeshgah; j++)
+		{
+			if (abc)	cout << "\t HELP : <Number Of show's column> card (kind of card) : " << endl;
+			abc = false;
+			cout << "\t <" << j << "> " << players[i].namayeshgah[j] << " (" << players[i].kind_of_namayeshgah[j] << ")" << endl << endl;
+		}
+
+	}
+	cout << "\t Your Choice : ";
+	int choice;
+	cin >> choice;
+	cin.ignore();
+	cout << endl << "\t Press Enter For Continue ";
+	cin.ignore();
+	system("cls");
+	system("color 0F");
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+	cout << "                                                        " << "____________________GAME___________________" << endl << endl;
+
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+	return choice;
+}
+bool tedad_sotoon_of_namayeshgah(Player players[], int number_of_players)
+{
+	int i;
+	for (i = 0; i < number_of_players; i++)
+	{
+		if (players[i].count_tedad_namayeshgah == 6)return false;
+	}
+	return true;
+}
+
+bool score(Player players[], int number_of_players)
+{
+	int i, j;
+	bool finished_game = false;
+	bool result_score = false;
+
+	for (i = 0; i < number_of_players; i++)
+	{
+		int abcd = 0;
+		if (abcd == 0)
+			result_score = check_sotoonhay_namayeshgah(players, number_of_players, i);
+		abcd++;
+
+
+		if (result_score) {
+			for (j = 0; j < players[i].count_tedad_namayeshgah; j++)
+			{
+				players[i].score += players[i].namayeshgah[j];
+				players[i].score_check += players[i].namayeshgah[j];
+			}
+			if (players[i].score >= 150)finished_game = true;
+		}
+		else {
+			players[i].score += 0;
+			players[i].score_check += 0;
+			break;
+		}
+	}
+	if (finished_game)
+		return false;
+	else return true;
+}
+bool check_sotoonhay_namayeshgah(Player players[], int number_of_players, int shomareplayer)
+{
+	int i, j;
+	bool first_kind = false, second_kind = false, third_kind = false, result = false;
+
+	for (j = 0; j < players[shomareplayer].count_tedad_namayeshgah; j++)
+	{
+		if (players[shomareplayer].kind_of_namayeshgah[j] == 1)first_kind = true;
+		else if (players[shomareplayer].kind_of_namayeshgah[j] == 2)second_kind = true;
+		else if (players[shomareplayer].kind_of_namayeshgah[j] == 3)third_kind = true;
+		if (first_kind == true && second_kind == true && third_kind == true)
+		{
+			result = true;
+		}
+	}
+	return result;
+
+}
+
+int namayesh_players(Player players[], int number_of_players)
+{
+	int i, j;
+	Player temp;
+	for (i = 0; i < number_of_players - 1; i++)
+	{
+
+		for (j = 0; j < number_of_players - 1 - i; j++)
+		{
+			if (players[j].score > players[j + 1].score) {
+				temp = players[j];
+				players[j] = players[j + 1];
+				players[j + 1] = temp;
+			}
+		}
+	}
+
+	system("cls");
+	system("color 0B");
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+	cout << "                                                        " << "____________________SHOW SCORES___________________" << endl << endl;
+
+	cout << "************************************************************************************************************************************************************************" << endl << endl;
+
+	for (i = 0; i < number_of_players; i++)
+	{
+		if (i != number_of_players - 1) {
+			int a = 0, b = 0;
+			std::chrono::steady_clock::time_point tend = std::chrono::steady_clock::now()
+				+ std::chrono::seconds(4);
+			while (std::chrono::steady_clock::now() < tend) {
+				if (a == 0) {
+
+					system("color 0B");
+
+					cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << "************************************************************************************************************************************************************************" << endl << endl;
+					cout << "                                                                     The " << number_of_players - i << " th Player is ..." << endl << endl << endl;
+
+					cout << "************************************************************************************************************************************************************************";
+				}
+				a++;
+			}
+			std::chrono::steady_clock::time_point zaman = std::chrono::steady_clock::now()
+				+ std::chrono::seconds(4);
+			while (std::chrono::steady_clock::now() < zaman) {
+				if (b == 0) {
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+
+					cout << "************************************************************************************************************************************************************************" << endl << endl;
+					cout << "                                                                             " << players[i].name << endl << endl << endl;
+
+					cout << "************************************************************************************************************************************************************************";
+				}
+				b++;
+			}
+		}
+		else {
+			int a = 0, b = 0;
+			std::chrono::steady_clock::time_point tend = std::chrono::steady_clock::now()
+				+ std::chrono::seconds(4);
+			while (std::chrono::steady_clock::now() < tend) {
+				if (a == 0) {
+					system("cls");
+					system("color 0A");
+
+					cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << "************************************************************************************************************************************************************************" << endl << endl;
+					cout << "                                                           AND FINALLY THE WINNER IS ... " << endl << endl << endl;
+
+					cout << "************************************************************************************************************************************************************************";
+				}
+				a++;
+			}
+			std::chrono::steady_clock::time_point abcde = std::chrono::steady_clock::now()
+				+ std::chrono::seconds(4);
+			while (std::chrono::steady_clock::now() < abcde) {
+				if (b == 0) {
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+
+					cout << "************************************************************************************************************************************************************************" << endl << endl;
+					cout << "                                                                             " << players[i].name << endl << endl << endl;
+
+					cout << "************************************************************************************************************************************************************************";
+				}
+				b++;
+			}
+
+		}
+	}
+	return 0;
+}
+
+bool score_check(Player players[], int number_of_players)
+{
+	int i, sum, j, abcd;
+	bool result_score = false, finished_game = false;
+	for (i = 0; i < number_of_players; i++)
+	{
+		abcd = 0;
+		if (abcd == 0)
+			result_score = check_sotoonhay_namayeshgah(players, number_of_players, i);
+		abcd++;
+
+		sum = 0;
+		if (result_score) {
+			for (j = 0; j < players[i].count_tedad_namayeshgah; j++)
+			{
+				sum += players[i].namayeshgah[j];
+			}
+			if (sum + players[i].score_check >= 150)finished_game = true;
+		}
+		else {
+			sum = 0;
+			if (sum + players[i].score_check >= 150)finished_game = true;
+			break;
+
+		}
+	}
+	if (finished_game)
+		return false;
+	else return true;
+
+}
